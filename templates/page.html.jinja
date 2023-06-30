@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    {% macro note(n) %}
+        <p>{{n.text}}</p>
+    {%- endmacro %}
+
+    {% macro task(t) %}
+        <p style="padding-left:{{4 * t.level}}px">{{t.title}}</p>
+    {%- endmacro %}
+
+    {% macro section(s) %}
+        <h{{s.level}} id="{{s.line_num}}">
+            {{s.title}}
+            <a href="edit/L{{s.line_num}}/anchor/{{s.line_num}}">edit</a>
+        </h{{s.level}}>
+
+        {% for child in s.children %}
+            {% set child_class = child.__class__.__name__ %}
+            {% if child_class == "Section" %}
+                {{section(child)}}
+            {% elif child_class == "Note" %}
+                {{note(child)}}
+            {% elif child_class == "Task" %}
+                {{task(child)}}                
+            {% endif %}
+        {% endfor %}
+    {%- endmacro %}
+
+    {% for child in root.children %}
+            {% set child_class = child.__class__.__name__ %}
+            {% if child_class == "Section" %}
+                {{section(child)}}
+            {% elif child_class == "Note" %}
+                {{note(child)}}
+            {% elif child_class == "Task" %}
+                {{task(child)}}                   
+            {% endif %}
+    {% endfor %}
+</body>
