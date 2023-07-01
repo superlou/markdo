@@ -68,7 +68,7 @@ class Markdo:
             elif line.strip() == "":
                 continue
             else:
-                current_section.children.append(Note(line))
+                last_item.children.append(Note(line))
 
         self.root = root
 
