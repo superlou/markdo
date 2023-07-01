@@ -17,14 +17,11 @@ class Markdo:
         item_stack.append(root)
 
         for line_num, line in enumerate(lines):
-            current_section = next(item for item in reversed(item_stack)
-                                   if isinstance(item, Section))
-
             # Get info to determine line type
             section_level = lcount(line, "#")
             is_section_start = section_level > 0
             
-            task_start_matches = task_start_pattern.match(line)
+            task_start_matches = Task.start_pattern.match(line)
             is_task_start = task_start_matches is not None
             if is_task_start:
                 if task_start_matches.group(1):
@@ -35,22 +32,23 @@ class Markdo:
             else:
                 task_level = None    
 
+            last_item = item_stack[-1]
+            last_section = next(item for item in reversed(item_stack)
+                                   if isinstance(item, Section))            
+
             # Apply the info to create new items
             if is_section_start:
-                if section_level > current_section.level:
-                    section = current_section.create_child_section(line, section_level, line_num)
-                elif section_level == current_section.level:
-                    parent = current_section.parent
-                    section = parent.create_child_section(line, section_level, line_num)
+                if section_level == last_section.level:
+                    parent = last_section.parent                
+                elif section_level > last_section.level:
+                    parent = last_section
                 elif section_level < section.level:
-                    parent = current_section.parent.parent
-                    section = parent.create_child_section(line, section_level, line_num)
-                    
+                    parent = last_section.parent.parent
+                
+                section = parent.create_child_section(line, section_level, line_num)
                 item_stack.append(section)
             
             elif is_task_start:
-                last_item = item_stack[-1]
-
                 if isinstance(last_item, Section):
                     parent = last_item
                 elif isinstance(last_item, Task) and task_level == last_item.level:
@@ -74,49 +72,46 @@ class Markdo:
 
         self.root = root
 
-class Section:
-    def __init__(self, title: str, level: int, line_num=None):
-        self.title = title
-        self.level = level
-        self.line_num = line_num
-        self.children = []
-        self.parent = None
 
+class TaskContainer:
+    def create_child_task(self, title: str, level: int, line_num=None):
+        child = Task(title, level, line_num)
+        child.parent = self
+        self.children.append(child)
+        return child
+
+
+class SectionContainer:
     def create_child_section(self, title: str, level: int, line_num=None):
         child = Section(title, level, line_num)
         child.parent = self
         self.children.append(child)
         return child
-    
-    def create_child_task(self, title: str, level: int, line_num=None):
-        child = Task(title, level, line_num)
-        child.parent = self
-        self.children.append(child)
-        return child
 
 
-task_start_pattern = re.compile(r"(\s)*\[[ \w]\]")
-
-
-class Task:
+class Section(SectionContainer, TaskContainer):
     def __init__(self, title: str, level: int, line_num=None):
         self.title = title
         self.level = level
         self.line_num = line_num
         self.children = []
         self.parent = None
-    
-    def create_child_task(self, title: str, level: int, line_num=None):
-        child = Task(title, level, line_num)
-        child.parent = self
-        self.children.append(child)
-        return child
+
+
+class Task(TaskContainer):
+    start_pattern = re.compile(r"(\s)*\[[ \w]\]")
+
+    def __init__(self, title: str, level: int, line_num=None):
+        self.title = title
+        self.level = level
+        self.line_num = line_num
+        self.children = []
+        self.parent = None
 
     def parse_title(text:str) -> str:
         end_box_pos = text.find("]")
         text = text[end_box_pos + 1:].strip()
         return text
-
 
 
 class Note:
