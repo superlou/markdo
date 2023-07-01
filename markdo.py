@@ -45,7 +45,8 @@ class Markdo:
                 elif section_level < section.level:
                     parent = last_section.parent.parent
                 
-                section = parent.create_child_section(line, section_level, line_num)
+                title = Section.parse_title(line)
+                section = parent.create_child_section(title, section_level, line_num)
                 item_stack.append(section)
             
             elif is_task_start:
@@ -96,6 +97,11 @@ class Section(SectionContainer, TaskContainer):
         self.line_num = line_num
         self.children = []
         self.parent = None
+    
+    def parse_title(text: str) -> str:
+        last_pound = lcount(text, "#")
+        text = text[last_pound + 1:].strip()
+        return text
 
 
 class Task(TaskContainer):
@@ -108,7 +114,7 @@ class Task(TaskContainer):
         self.children = []
         self.parent = None
 
-    def parse_title(text:str) -> str:
+    def parse_title(text: str) -> str:
         end_box_pos = text.find("]")
         text = text[end_box_pos + 1:].strip()
         return text
