@@ -69,7 +69,7 @@ class Markdo:
             elif line.strip() == "":
                 continue
             else:
-                last_item.children.append(Note(line))
+                last_item.children.append(Note(line.strip()))
 
         self.root = root
 

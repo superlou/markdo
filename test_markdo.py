@@ -1,4 +1,4 @@
-from markdo import Markdo
+from markdo import Markdo, Section, Task, Note
 
 
 def test_section_parsing():
@@ -25,6 +25,7 @@ def test_tasks_and_subtask_parsing():
 # Heading 1
 [ ] Task 1
 [ ] Task 2
+    Some descriptive text.
     [ ] Task 2.1
 [ ] Task 3
 # Heading 2
@@ -37,12 +38,20 @@ def test_tasks_and_subtask_parsing():
     assert len(markdo.root.children[0].children) == 3
     assert markdo.root.children[0].children[0].title == "Task 1"
     assert markdo.root.children[0].children[1].title == "Task 2"
-    assert markdo.root.children[0].children[1].children[0].title == "Task 2.1"
+    assert markdo.root.children[0].children[1].children[1].title == "Task 2.1"
     assert markdo.root.children[0].children[2].title == "Task 3"
     assert markdo.root.children[1].children[0].children[0].title == "Task 3"
 
 
 def print_tree(item, level=0):
-    print("-" * level, item.title)
-    for child in item.children:
-        print_tree(child, level + 1)
+    if isinstance(item, Section):
+        desc = item.title
+    elif isinstance(item, Task):
+        desc = item.title
+    elif isinstance(item, Note):
+        desc = item.text
+
+    print("-" * level, desc)
+    if hasattr(item, "children"):
+        for child in item.children:
+            print_tree(child, level + 1)
