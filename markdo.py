@@ -17,7 +17,8 @@ class Markdo:
         item_stack.append(root)
 
         for line_num, line in enumerate(lines):
-            current_section = next(item for item in reversed(item_stack) if isinstance(item, Section))
+            current_section = next(item for item in reversed(item_stack)
+                                   if isinstance(item, Section))
 
             # Get info to determine line type
             section_level = lcount(line, "#")
@@ -46,9 +47,28 @@ class Markdo:
                     section = parent.create_child_section(line, section_level, line_num)
                     
                 item_stack.append(section)
-            # elif is_task_start:
-            #     # todo Task creation is not working
-            #     pass
+            
+            elif is_task_start:
+                last_item = item_stack[-1]
+
+                if isinstance(last_item, Section):
+                    parent = last_item
+                elif isinstance(last_item, Task) and task_level == last_item.level:
+                    parent = last_item.parent
+                elif isinstance(last_item, Task) and task_level > last_item.level:
+                    parent = last_item
+                elif isinstance(last_item, Task) and task_level < last_item.level:
+                    parent = last_item.parent.parent
+                else:
+                    print("Couldn't determine Task parent!")
+                    continue
+
+                title = Task.parse_title(line)
+                task = parent.create_child_task(title, task_level)
+                item_stack.append(task)
+
+            elif line.strip() == "":
+                continue
             else:
                 current_section.children.append(Note(line))
 
@@ -69,7 +89,7 @@ class Section:
         return child
     
     def create_child_task(self, title: str, level: int, line_num=None):
-        child = Task(title, line_num)
+        child = Task(title, level, line_num)
         child.parent = self
         self.children.append(child)
         return child
@@ -85,6 +105,18 @@ class Task:
         self.line_num = line_num
         self.children = []
         self.parent = None
+    
+    def create_child_task(self, title: str, level: int, line_num=None):
+        child = Task(title, level, line_num)
+        child.parent = self
+        self.children.append(child)
+        return child
+
+    def parse_title(text:str) -> str:
+        end_box_pos = text.find("]")
+        text = text[end_box_pos + 1:].strip()
+        return text
+
 
 
 class Note:
