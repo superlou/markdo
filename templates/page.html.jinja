@@ -4,6 +4,14 @@
         body {
             font-family: sans-serif;
         }
+
+        .edit {
+            visibility: hidden;
+        }
+
+        .section-heading:hover .edit {
+            visibility: visible;
+        }
     </style>
 </head>
 <body>
@@ -16,9 +24,9 @@
     {%- endmacro %}
 
     {% macro section(s) %}
-        <h{{s.level}} id="{{s.line_num}}">
+        <h{{s.level}} id="{{s.line_num}}" class="section-heading">
             {{s.title}}
-            <a href="edit/L{{s.line_num}}/anchor/{{s.line_num}}">edit</a>
+            <a href="edit/L{{s.line_num}}/anchor/{{s.line_num}}" class="edit">edit</a>
         </h{{s.level}}>
 
         {% for child in s.children %}
