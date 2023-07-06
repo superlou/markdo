@@ -12,6 +12,11 @@
         .section-heading:hover .edit {
             visibility: visible;
         }
+
+        .task-open-False {
+            text-decoration: line-through;
+            color: rgb(182, 182, 182);
+        }
     </style>
 </head>
 <body>
@@ -20,7 +25,17 @@
     {%- endmacro %}
 
     {% macro task(t) %}
-        <p style="padding-left:{{4 * t.level}}px">{{t.title}}</p>
+        <p style="padding-left:{{4 * t.level}}px" class="task-open-{{t.is_open}}">{{t.title}}</p>
+        {% for child in t.children %}
+            {% set child_class = child.__class__.__name__ %}
+            {% if child_class == "Section" %}
+                {{section(child)}}
+            {% elif child_class == "Note" %}
+                {{note(child)}}
+            {% elif child_class == "Task" %}
+                {{task(child)}}                
+            {% endif %}
+        {% endfor %}
     {%- endmacro %}
 
     {% macro section(s) %}
@@ -42,13 +57,13 @@
     {%- endmacro %}
 
     {% for child in root.children %}
-            {% set child_class = child.__class__.__name__ %}
-            {% if child_class == "Section" %}
-                {{section(child)}}
-            {% elif child_class == "Note" %}
-                {{note(child)}}
-            {% elif child_class == "Task" %}
-                {{task(child)}}                   
-            {% endif %}
+        {% set child_class = child.__class__.__name__ %}
+        {% if child_class == "Section" %}
+            {{section(child)}}
+        {% elif child_class == "Note" %}
+            {{note(child)}}
+        {% elif child_class == "Task" %}
+            {{task(child)}}                   
+        {% endif %}
     {% endfor %}
 </body>

@@ -1,7 +1,7 @@
 import subprocess
 from flask import Flask, redirect, url_for
 from jinja2 import Environment, PackageLoader, select_autoescape
-from markdo import Markdo
+from markdo import Markdo, print_tree
 
 
 app = Flask(__name__)
@@ -20,6 +20,7 @@ env = Environment(
 def index():
     markdo = Markdo(open(path).read())
     root = markdo.root
+    print_tree(root)
     return env.get_template("page.html.jinja").render(root=root)
 
 

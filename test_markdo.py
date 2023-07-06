@@ -1,4 +1,4 @@
-from markdo import Markdo, Section, Task, Note
+from markdo import Markdo, Section, Task, Note, print_tree
 
 
 def test_section_parsing():
@@ -43,15 +43,33 @@ def test_tasks_and_subtask_parsing():
     assert markdo.root.children[1].children[0].children[0].title == "Task 3"
 
 
-def print_tree(item, level=0):
-    if isinstance(item, Section):
-        desc = item.title
-    elif isinstance(item, Task):
-        desc = item.title
-    elif isinstance(item, Note):
-        desc = item.text
+def test_task_completion():
+    text = """
+[x] Task 0
+[ ] Task 1
+    Some descriptive text.
+    [ ] Task 1.1
+    [x] Task 1.2
+    [ ] Task 1.3
+[ ] Task 2
+    [x] Task 2.1
+    [x] Task 2.2
+[ ] Task 3
+"""
 
-    print("-" * level, desc)
-    if hasattr(item, "children"):
-        for child in item.children:
-            print_tree(child, level + 1)
+    markdo = Markdo(text)
+    root = markdo.root
+    assert root.children[0].is_open == False
+    assert len(root.children[0].subtasks()) == 0
+
+    assert root.children[1].is_open == True
+    assert len(root.children[1].subtasks()) == 3
+    assert len(root.children[1].subtasks(open=True)) == 2
+    assert len(root.children[1].subtasks(open=False)) == 1
+
+    assert root.children[2].is_open == True
+    assert len(root.children[2].subtasks()) == 2
+    assert len(root.children[2].subtasks(open=True)) == 0
+    assert len(root.children[2].subtasks(open=False)) == 2
+
+    assert root.children[3].is_open == True

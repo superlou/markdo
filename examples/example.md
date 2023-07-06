@@ -15,7 +15,7 @@
 
 ## Design Activities
 
-[ ] Prototype
+[x] Prototype
 [ ] Ship-it like it's production
     6/29/23 We thought about testing, but that seems like a hassle.
     7/2/23 Testing is actually a big problem. Best to avoid it.
