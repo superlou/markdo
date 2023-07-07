@@ -81,6 +81,13 @@ class TaskContainer:
         self.children.append(child)
         return child
 
+    def subtasks(self, open=None):
+        if open is None:
+            return [child for child in self.children if isinstance(child, Task)]
+        else:
+            return [child for child in self.children
+                    if isinstance(child, Task) and child.is_open == open]
+
 
 class SectionContainer:
     def create_child_section(self, title: str, level: int, line_num=None):
@@ -127,13 +134,6 @@ class Task(TaskContainer):
         end_box_pos = text.find("]")
         text = text[end_box_pos + 1:].strip()
         return text
-
-    def subtasks(self, open=None):
-        if open is None:
-            return [child for child in self.children if isinstance(child, Task)]
-        else:
-            return [child for child in self.children
-                    if isinstance(child, Task) and child.is_open == open]
 
 
 class Note:

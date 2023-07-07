@@ -18,11 +18,15 @@
             <p>{{n.text}}</p>
         {%- endmacro %}
 
-        {% macro subtasks_badge(t) %}
-            {% if t.subtasks() | length > 0 %}
-                {% set no_open_subtasks = t.subtasks(open=True) | length == 0 %}
+        {% macro subtasks_badge(item, postfix) %}
+            {% set total_subtasks = item.subtasks() | length %}
+            {% set open_subtasks = item.subtasks(open=True) | length %}
+            {% set closed_subtasks = item.subtasks(open=False) | length %}
+            {% set no_open_subtasks = open_subtasks == 0 %}
+
+            {% if total_subtasks > 0 %}
                 <span class="badge rounded-pill {{'text-bg-success' if no_open_subtasks else 'text-bg-primary'}}">
-                    {{t.subtasks(open=False) | length }}/{{t.subtasks() | length }}
+                    {{closed_subtasks }}/{{total_subtasks}}{{postfix}}
                 </span>
             {% endif %}
         {%- endmacro %}
@@ -47,6 +51,7 @@
             <h{{s.level}} id="{{s.line_num}}" class="section-heading">
                 <a href="edit/L{{s.line_num}}/anchor/{{s.line_num}}" class="edit">{{s.title}}</a>
             </h{{s.level}}>
+            <p>{{subtasks_badge(s, " tasks completed")}}</p>
 
             {{render_children(s.children)}}
         {%- endmacro %}

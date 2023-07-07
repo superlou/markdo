@@ -73,3 +73,40 @@ def test_task_completion():
     assert len(root.children[2].subtasks(open=False)) == 2
 
     assert root.children[3].is_open == True
+
+
+def test_section_completion():
+    text = """
+# Heading 1
+[x] Task 0
+[ ] Task 1
+    Some descriptive text.
+    [ ] Task 1.1
+    [x] Task 1.2
+    [ ] Task 1.3
+[ ] Task 2
+# Heading 2
+[ ] Task 2.1
+# Heading 3
+[x] Task 3.1
+## Heading 3.1
+[ ] Task 3.1.1
+"""
+
+    markdo = Markdo(text)
+    root = markdo.root
+    assert len(root.children[0].subtasks()) == 3
+    assert len(root.children[0].subtasks(open=True)) == 2
+    assert len(root.children[0].subtasks(open=False)) == 1
+
+    assert len(root.children[1].subtasks()) == 1
+    assert len(root.children[1].subtasks(open=True)) == 1
+    assert len(root.children[1].subtasks(open=False)) == 0
+
+    assert len(root.children[2].subtasks()) == 1
+    assert len(root.children[2].subtasks(open=True)) == 0
+    assert len(root.children[2].subtasks(open=False)) == 1
+
+    assert(len(root.children[2].children[1].subtasks())) == 1
+    assert len(root.children[2].children[1].subtasks(open=True)) == 1
+    assert len(root.children[2].children[1].subtasks(open=False)) == 0    
