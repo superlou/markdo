@@ -1,69 +1,56 @@
-<!DOCTYPE html>
-<head>
-    <style>
-        body {
-            font-family: sans-serif;
-        }
+{% extends "base.html.jinja" %}
+{% block content %}
+    <div class="container">
+        {% macro render_children(children) %}
+            {% for child in children %}
+                {% set child_class = child.__class__.__name__ %}
+                {% if child_class == "Section" %}
+                    {{section(child)}}
+                {% elif child_class == "Note" %}
+                    {{note(child)}}
+                {% elif child_class == "Task" %}
+                    {{task(child)}}                
+                {% endif %}
+            {% endfor %}
+        {%- endmacro %}
 
-        .edit {
-            visibility: hidden;
-        }
+        {% macro note(n) %}
+            <p>{{n.text}}</p>
+        {%- endmacro %}
 
-        .section-heading:hover .edit {
-            visibility: visible;
-        }
-
-        .task-open-False {
-            text-decoration: line-through;
-            color: rgb(182, 182, 182);
-        }
-    </style>
-</head>
-<body>
-    {% macro note(n) %}
-        <p>{{n.text}}</p>
-    {%- endmacro %}
-
-    {% macro task(t) %}
-        <p style="padding-left:{{4 * t.level}}px" class="task-open-{{t.is_open}}">{{t.title}}</p>
-        {% for child in t.children %}
-            {% set child_class = child.__class__.__name__ %}
-            {% if child_class == "Section" %}
-                {{section(child)}}
-            {% elif child_class == "Note" %}
-                {{note(child)}}
-            {% elif child_class == "Task" %}
-                {{task(child)}}                
+        {% macro subtasks_badge(t) %}
+            {% if t.subtasks() | length > 0 %}
+                {% set no_open_subtasks = t.subtasks(open=True) | length == 0 %}
+                <span class="badge rounded-pill {{'text-bg-success' if no_open_subtasks else 'text-bg-primary'}}">
+                    {{t.subtasks(open=False) | length }}/{{t.subtasks() | length }}
+                </span>
             {% endif %}
-        {% endfor %}
-    {%- endmacro %}
+        {%- endmacro %}
 
-    {% macro section(s) %}
-        <h{{s.level}} id="{{s.line_num}}" class="section-heading">
-            {{s.title}}
-            <a href="edit/L{{s.line_num}}/anchor/{{s.line_num}}" class="edit">edit</a>
-        </h{{s.level}}>
+        {% macro task(t) %}
+            <div class="task task-open-{{t.is_open}}">
+                <div class="task-heading">
+                    <a href="edit/L{{t.line_num}}/anchor/{{t.line_num}}" class="edit">
+                        <span class="open-task-box">☐</span>
+                        {{subtasks_badge(t)}}
+                        {{t.title}}
+                    </a>
+                </div>
 
-        {% for child in s.children %}
-            {% set child_class = child.__class__.__name__ %}
-            {% if child_class == "Section" %}
-                {{section(child)}}
-            {% elif child_class == "Note" %}
-                {{note(child)}}
-            {% elif child_class == "Task" %}
-                {{task(child)}}                
-            {% endif %}
-        {% endfor %}
-    {%- endmacro %}
+                <div class="task-children">
+                    {{render_children(t.children)}}
+                </div>
+            </div>
+        {%- endmacro %}
 
-    {% for child in root.children %}
-        {% set child_class = child.__class__.__name__ %}
-        {% if child_class == "Section" %}
-            {{section(child)}}
-        {% elif child_class == "Note" %}
-            {{note(child)}}
-        {% elif child_class == "Task" %}
-            {{task(child)}}                   
-        {% endif %}
-    {% endfor %}
-</body>
+        {% macro section(s) %}
+            <h{{s.level}} id="{{s.line_num}}" class="section-heading">
+                <a href="edit/L{{s.line_num}}/anchor/{{s.line_num}}" class="edit">{{s.title}}</a>
+            </h{{s.level}}>
+
+            {{render_children(s.children)}}
+        {%- endmacro %}
+
+        {{render_children(root.children)}}
+    </div>
+{% endblock %}

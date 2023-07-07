@@ -2,11 +2,14 @@
 
 ## Contractual Milestones
 
+These are all the contractual milestones pulled from the SOW.
+
 [ ] PDR
     Due: 8/1/23
     [x] Draft slides by 7/15/23
     [x] All slides ready for review by 7/30/23
     [ ] Presentation review
+        7/6/23 No updates yet. Waiting on input.
     [ ] Pick lunch
 [ ] CDR
     Due: 1/15/24

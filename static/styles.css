@@ -1,0 +1,34 @@
+body {
+    font-family: sans-serif;
+}
+
+a.edit, a.edit:visited {
+    text-decoration: none;
+    color: black;
+}
+
+a.edit:hover, a.edit:active {
+    color: rgb(58, 104, 255);
+}
+
+
+.section-heading:hover > .edit {
+    visibility: visible;
+}
+
+.task-heading {
+    margin-bottom: 16px;
+}
+
+.task-heading:hover > .edit {
+    visibility: visible;
+}
+
+
+.task-open-False {
+    display: none;
+}
+
+.task-children {
+    padding-left: 2em;
+}

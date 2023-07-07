@@ -4,7 +4,7 @@ from jinja2 import Environment, PackageLoader, select_autoescape
 from markdo import Markdo, print_tree
 
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="")
 
 # editor_cmd = "C:/Program Files (x86)/Notepad++/notepad++.exe {file} -n{line}"
 path = "./examples/example.md"
