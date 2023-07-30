@@ -1,0 +1,15 @@
+{
+    "name": "markdo-parser",
+    "version": "0.1.0",
+    "type": "module",
+    "devDependencies": {
+        "@lezer/generator": "^1.0.0"
+    },
+    "dependencies": {
+        "@lezer/lr": "^1.0.0"
+    },
+    "scripts": {
+        "prepare": "rollup -c",
+        "test": "rollup -c && node tests/test.js"
+    }    
+}

@@ -1,0 +1,32 @@
+@top Doc { element* }
+
+element {
+    Atom { Identifier lineEnd } |
+    Section { Identifier lineEnd Block }
+}
+
+lineEnd { newline | eof }
+
+Block { indent element+ (dedent | eof) }
+
+@skip {
+    spaces |
+    Comment |
+    blankLineStart (spaces | Comment)* lineEnd
+}
+
+@context trackIndent from "./tokens.js"
+
+@external tokens indentation from "./tokens.js" {
+  indent
+  dedent
+  blankLineStart
+}
+
+@tokens {
+  spaces { $[ \t]+ }
+  newline { "\n" }
+  eof { @eof }
+  Comment { "#" ![\n]+ }
+  Identifier { $[a-zA-Z0-9_]+ }
+}
