@@ -1,8 +1,9 @@
-@top Doc { element* }
+@top Tree { element* }
 
 element {
     Atom { Identifier lineEnd } |
-    Section { Identifier lineEnd Block }
+    Section { Identifier lineEnd Block } |
+    Task { TaskBox Description lineEnd Block* }
 }
 
 lineEnd { newline | eof }
@@ -16,11 +17,10 @@ Block { indent element+ (dedent | eof) }
 }
 
 @context trackIndent from "./tokens.js"
-
 @external tokens indentation from "./tokens.js" {
-  indent
-  dedent
-  blankLineStart
+    indent
+    dedent
+    blankLineStart
 }
 
 @tokens {
@@ -29,4 +29,6 @@ Block { indent element+ (dedent | eof) }
   eof { @eof }
   Comment { "#" ![\n]+ }
   Identifier { $[a-zA-Z0-9_]+ }
+  TaskBox { "[ ]" }
+  Description { $[a-zA-Z0-9_]+ }
 }

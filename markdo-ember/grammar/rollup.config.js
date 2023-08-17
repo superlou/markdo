@@ -1,14 +1,20 @@
-import { lezer } from "@lezer/generator/rollup"
+import {lezer} from "@lezer/generator/rollup";
+import {nodeResolve} from "@rollup/plugin-node-resolve";
 
-export default {
-  input: "./src/markdo.grammar",
-  output: [{
-    format: "es",
-    file: "./dist/index.js"
+export default [
+  {
+    input: "./src/markdo.grammar",
+    output: [{
+      file: "./dist/markdo.grammar.js",
+      format: "es",
+    }],
+    plugins: [nodeResolve(), lezer()],
   }, {
-    format: "cjs",
-    file: "./dist/index.cjs"
-  }],
-  external: ["@lezer/lr", "@lezer/highlight"],
-  plugins: [lezer()]
-}
+    input: "./src/main.js",
+    output: [{
+      file: "./public/app.js",
+      format: "iife",
+    }],
+    plugins: [nodeResolve()],
+  }
+]

@@ -1,13 +1,24 @@
 import { parser } from "../dist/index.js";
+import { logTree } from "../dist/print-lezer-tree.js"
 
 let example = `
-# Section 1
+Word
 
-[ ] Test
+Section
+  Subsection
+    # Comment
+    Content
+    More # Comment 2
+    [ ] Task1
+    [ ] Task2
+      [ ] Subtask2_1
 
-# Section 2
+  Etc
+
 `;
 
-let result = parser.parse(example);
+let tree = parser.parse(example);
 
-console.log(result);
+console.log(tree);
+
+logTree(tree, example);
