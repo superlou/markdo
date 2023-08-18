@@ -1,9 +1,9 @@
 @top Tree { element* }
 
 element {
-    Atom { Identifier lineEnd } |
-    Section { Identifier lineEnd Block } |
-    Task { TaskBox Description lineEnd Block* }
+    Heading { HeadingMarker Text lineEnd } |
+    Paragraph { Text lineEnd } |
+    Task { TaskMarker Text lineEnd Block* }
 }
 
 lineEnd { newline | eof }
@@ -11,9 +11,7 @@ lineEnd { newline | eof }
 Block { indent element+ (dedent | eof) }
 
 @skip {
-    spaces |
-    Comment |
-    blankLineStart (spaces | Comment)* lineEnd
+    blankLineStart (spaces)* lineEnd
 }
 
 @context trackIndent from "./tokens.js"
@@ -24,11 +22,10 @@ Block { indent element+ (dedent | eof) }
 }
 
 @tokens {
+  HeadingMarker { "="+ spaces* }
+  TaskMarker { "[" $[xr ] "]" spaces* }  
   spaces { $[ \t]+ }
   newline { "\n" }
   eof { @eof }
-  Comment { "#" ![\n]+ }
-  Identifier { $[a-zA-Z0-9_]+ }
-  TaskBox { "[ ]" }
-  Description { $[a-zA-Z0-9_]+ }
+  Text { $[a-zA-Z0-9_.!?#'" ]+ }
 }

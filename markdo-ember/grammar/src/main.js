@@ -7,18 +7,21 @@ import {parser as markdoParser} from "../dist/markdo.grammar.js";
 import {visualize} from "@colin_t/lezer-tree-visualizer";
 import {markdo} from "./markdo.js";
 
-let example = `Word
+let example = `Initial description.
 
-Section
-    Subsection
-        # Comment
-        Content
-        More # Comment 2
-        [ ] Task1
-        [ ] Task2
-            [ ] Subtask2_1
+= Heading 1
+I don't know why I can't parse "#" correctly.
 
-  Etc
+== Heading 1.1
+Content
+
+[ ] Task 1
+[x] Task 2
+    Descriptive text for Task 2.
+    [ ] Subtask 2.1 has additional text
+        And it contains notes!
+        Notes can go across two lines.
+        For some reason they include the leading tabs... after the first line.
 `;
 
 let startState = EditorState.create({
@@ -27,7 +30,6 @@ let startState = EditorState.create({
     basicSetup,
     keymap.of([defaultKeymap, indentWithTab]),
     indentUnit.of("    "),
-    syntaxHighlighting(),
     markdo(),
   ]
 });
