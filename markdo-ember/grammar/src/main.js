@@ -22,6 +22,7 @@ Content
         And it contains notes!
         Notes can go across two lines.
         For some reason they include the leading tabs... after the first line.
+    This descriptive text is for Task 2.
 `;
 
 let startState = EditorState.create({
