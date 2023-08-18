@@ -2,6 +2,7 @@
 
 element {
     Heading { HeadingMarker Text lineEnd } |
+    Update { Date Text lineEnd} |    
     Paragraph { Text lineEnd } |
     Task { TaskMarker Text lineEnd Block* }
 }
@@ -22,10 +23,16 @@ Block { indent element+ (dedent | eof) }
 }
 
 @tokens {
-  HeadingMarker { "="+ spaces* }
-  TaskMarker { "[" $[xr ] "]" spaces* }  
+  HeadingMarker { "#"+ spaces* }
+  TaskMarker { "[" $[xr ] "]" spaces* }
+  Date { num num "/" num num "/" (num num | num num num num) }
+  Text { $[a-zA-Z0-9!@#$%^&*()\-+=./'" ]+ }
+
+  @precedence { HeadingMarker, TaskMarker, Date, Text }
+  
   spaces { $[ \t]+ }
   newline { "\n" }
   eof { @eof }
-  Text { $[a-zA-Z0-9_.!?#'" ]+ }
+  num { $[0-9] }
+  
 }

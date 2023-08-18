@@ -9,10 +9,13 @@ import {markdo} from "./markdo.js";
 
 let example = `Initial description.
 
-= Heading 1
-I don't know why I can't parse "#" correctly.
+# Features
+[x] Use "#" for headings instead of "=".
+    8/18/23 It was because of the external tokenizer.
+[ ] Recognize updates.
+    8/18/23 It seems to be chosing paragraph instead of Update.
 
-== Heading 1.1
+## Heading 1.1
 Content
 
 [ ] Task 1

@@ -25,12 +25,17 @@ export const indentation = new ExternalTokenizer((input, stack) => {
   let prev = input.peek(-1)
   if (prev != -1 && prev != newline) return
   let spaces = 0
-  while (input.next == space || input.next == tab) { input.advance(); spaces++ }
-  if ((input.next == newline || input.next == hash) && stack.canShift(blankLineStart)) {
-    input.acceptToken(blankLineStart, -spaces)
+  
+  while (input.next == space || input.next == tab) {
+    input.advance();
+    spaces++;
+  }
+  
+  if (input.next == newline && stack.canShift(blankLineStart)) {
+    input.acceptToken(blankLineStart, -spaces);
   } else if (spaces > stack.context.depth) {
-    input.acceptToken(indent)
+    input.acceptToken(indent);
   } else if (spaces < stack.context.depth) {
-    input.acceptToken(dedent, -spaces)
+    input.acceptToken(dedent, -spaces);
   }
 })
