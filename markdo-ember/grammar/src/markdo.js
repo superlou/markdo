@@ -1,11 +1,14 @@
 import {LanguageSupport, LRLanguage} from "@codemirror/language";
-import {styleTags, tags as t} from "@lezer/highlight";
+import {styleTags, tags as t, Tag} from "@lezer/highlight";
 import {parser} from "../dist/markdo.grammar.js";
+
+let headingTag = Tag.define();
 
 let parserWithMetadata = parser.configure({
   props: [
     styleTags({
-      Task: t.variableName,
+      "Heading!": t.heading,
+      "DoneTask/... RejectedTask/...": t.strikethrough,
     })
   ]
 });
