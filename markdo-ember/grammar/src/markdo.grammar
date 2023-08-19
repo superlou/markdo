@@ -1,11 +1,20 @@
 @top Tree { element* }
 
+// @precedence { update @left, paragraph @left }
+
 element {
     Heading { HeadingMarker Text lineEnd } |
-    Update { Date Text lineEnd} |    
-    Paragraph { Text lineEnd } |
-    Task { TaskMarker Text lineEnd Block* }
+    Update { Date spaces Text lineEnd} |    
+    OpenTask { task<openTaskMarker> } |
+    DoneTask { task<doneTaskMarker> } |
+    RejectedTask { task<rejectedTaskMarker> } |
+    Paragraph { Text lineEnd }
 }
+
+task<marker> { marker Text lineEnd Block* }
+openTaskMarker { "[ ]" }
+doneTaskMarker { "[x]" }
+rejectedTaskMarker { "[r]" }
 
 lineEnd { newline | eof }
 
@@ -23,12 +32,11 @@ Block { indent element+ (dedent | eof) }
 }
 
 @tokens {
-  HeadingMarker { "#"+ spaces* }
-  TaskMarker { "[" $[xr ] "]" spaces* }
-  Date { num num "/" num num "/" (num num | num num num num) }
-  Text { $[a-zA-Z0-9!@#$%^&*()\-+=./'" ]+ }
+  HeadingMarker { "#"+ " " }
+  Date { (num | num num) "/" (num | num num) "/" (num num | num num num num) }
+  Text { $[a-zA-Z0-9!@#$%^&*()\-+=./'", ]+ }
 
-  @precedence { HeadingMarker, TaskMarker, Date, Text }
+  @precedence { HeadingMarker, Date, Text }
   
   spaces { $[ \t]+ }
   newline { "\n" }

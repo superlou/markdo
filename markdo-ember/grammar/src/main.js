@@ -13,6 +13,7 @@ let example = `Initial description.
 [x] Use "#" for headings instead of "=".
     8/18/23 It was because of the external tokenizer.
 [ ] Recognize updates.
+    8/19/23 I needed to account for single-number parts. However, multiple updates don't work.
     8/18/23 It seems to be chosing paragraph instead of Update.
 
 ## Heading 1.1
