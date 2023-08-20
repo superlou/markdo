@@ -25640,36 +25640,23 @@
      return new LanguageSupport(markdoLanguage, []);
    }
 
-   let example = `Initial description.
+   let localStorageSaveOnChange = EditorView.updateListener.of(update => {
+     if (update.docChanged > 0) {
+       let doc = update.state.doc.toString();
+       window.localStorage.doc = doc;
+     }
+   });
 
-# Features
-[x] Use "#" for headings instead of "=".
-    8/18/23 It was because of the external tokenizer.
-[ ] Recognize updates.
-    8/19/23 I needed to account for single-number parts. However, multiple updates don't work.
-    8/18/23 It seems to be chosing paragraph instead of Update.
-
-## Heading 1.1
-Content
-
-[ ] Task 1
-[ ] Task 2
-    Descriptive text for Task 2.
-    [x] Subtask 2.1 has additional text
-        And it contains notes!
-        Notes can go across two lines.
-        For some reason they include the leading tabs... after the first line.
-    [ ] This task is still open.
-    This descriptive text is for Task 2.
-`;
+   let localStorageLoad = window.localStorage.doc;
 
    let startState = EditorState.create({
-     doc: example,
+     doc: localStorageLoad,
      extensions: [
        basicSetup,
        keymap.of([defaultKeymap, indentWithTab]),
        indentUnit.of("    "),
        markdo(),
+       localStorageSaveOnChange,
      ]
    });
 
@@ -25678,8 +25665,8 @@ Content
      parent: document.body
    });
 
-   let tree = parser.parse(example);
+   let tree = parser.parse(localStorageLoad);
    tree.cursor();
-   D(tree.cursor(), example);
+   D(tree.cursor(), localStorageLoad);
 
 })();
