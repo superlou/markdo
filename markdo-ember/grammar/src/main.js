@@ -20,12 +20,13 @@ let example = `Initial description.
 Content
 
 [ ] Task 1
-[x] Task 2
+[ ] Task 2
     Descriptive text for Task 2.
-    [ ] Subtask 2.1 has additional text
+    [x] Subtask 2.1 has additional text
         And it contains notes!
         Notes can go across two lines.
         For some reason they include the leading tabs... after the first line.
+    [ ] This task is still open.
     This descriptive text is for Task 2.
 `;
 
