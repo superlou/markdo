@@ -25641,6 +25641,7 @@
    }
 
    let localStorageSaveOnChange = EditorView.updateListener.of(update => {
+     // todo This should be debounced.
      if (update.docChanged > 0) {
        let doc = update.state.doc.toString();
        window.localStorage.doc = doc;
