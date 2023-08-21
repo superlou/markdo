@@ -8,6 +8,7 @@ import {visualize} from "@colin_t/lezer-tree-visualizer";
 import {markdo} from "./markdo.js";
 import {localStorageSaveOnChange, localStorageLoad} from "./storage.js";
 import {markdoHighlight} from "./highlight.js";
+import {completionPlugin} from "./completion.js";
 
 let startState = EditorState.create({
   doc: localStorageLoad,
@@ -18,6 +19,7 @@ let startState = EditorState.create({
     markdo(),
     localStorageSaveOnChange,
     syntaxHighlighting(markdoHighlight),
+    completionPlugin,
   ]
 });
 
