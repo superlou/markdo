@@ -7,6 +7,7 @@ import {parser as markdoParser} from "../dist/markdo.grammar.js";
 import {visualize} from "@colin_t/lezer-tree-visualizer";
 import {markdo} from "./markdo.js";
 import {localStorageSaveOnChange, localStorageLoad} from "./storage.js";
+import {markdoHighlight} from "./highlight.js";
 
 let startState = EditorState.create({
   doc: localStorageLoad,
@@ -16,6 +17,7 @@ let startState = EditorState.create({
     indentUnit.of("    "),
     markdo(),
     localStorageSaveOnChange,
+    syntaxHighlighting(markdoHighlight),
   ]
 });
 
