@@ -25676,8 +25676,15 @@
      toDOM() {
        let wrap = document.createElement("span");
        wrap.setAttribute("aria-hidden", "true");
-       wrap.className = "cm-completion";
-       wrap.innerHTML = `(${this.closed}/${this.all})`;
+       wrap.className = "markdo-completion";
+       
+       if (this.closed === this.all) {
+         wrap.className += " markdo-completion-closed";
+       } else {
+         wrap.className += " markdo-completion-open";
+       }
+       
+       wrap.innerHTML = `${this.closed}/${this.all}`;
        return wrap;
      }
      
