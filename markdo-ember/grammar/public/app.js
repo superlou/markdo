@@ -4133,15 +4133,15 @@
    var ie$1 = typeof navigator != "undefined" && /MSIE \d|Trident\/(?:[7-9]|\d{2,})\..*rv:(\d+)/.exec(navigator.userAgent);
 
    // Fill in the digit keys
-   for (var i$1 = 0; i$1 < 10; i$1++) base[48 + i$1] = base[96 + i$1] = String(i$1);
+   for (var i = 0; i < 10; i++) base[48 + i] = base[96 + i] = String(i);
 
    // The function keys
-   for (var i$1 = 1; i$1 <= 24; i$1++) base[i$1 + 111] = "F" + i$1;
+   for (var i = 1; i <= 24; i++) base[i + 111] = "F" + i;
 
    // And the alphabetic keys
-   for (var i$1 = 65; i$1 <= 90; i$1++) {
-     base[i$1] = String.fromCharCode(i$1 + 32);
-     shift[i$1] = String.fromCharCode(i$1);
+   for (var i = 65; i <= 90; i++) {
+     base[i] = String.fromCharCode(i + 32);
+     shift[i] = String.fromCharCode(i);
    }
 
    // For each code that doesn't have a shift-equivalent, copy the base name
@@ -15645,8 +15645,8 @@
            rule = rule.next;
        return rule || null;
    }
-   const t$1 = Tag.define;
-   const comment = t$1(), name = t$1(), typeName = t$1(name), propertyName = t$1(name), literal = t$1(), string = t$1(literal), number = t$1(literal), content = t$1(), heading = t$1(content), keyword = t$1(), operator = t$1(), punctuation = t$1(), bracket = t$1(punctuation), meta = t$1();
+   const t = Tag.define;
+   const comment = t(), name = t(), typeName = t(name), propertyName = t(name), literal = t(), string = t(literal), number = t(literal), content = t(), heading = t(content), keyword = t(), operator = t(), punctuation = t(), bracket = t(punctuation), meta = t();
    /**
    The default set of highlighting [tags](#highlight.Tag).
 
@@ -15675,15 +15675,15 @@
        /**
        A line [comment](#highlight.tags.comment).
        */
-       lineComment: t$1(comment),
+       lineComment: t(comment),
        /**
        A block [comment](#highlight.tags.comment).
        */
-       blockComment: t$1(comment),
+       blockComment: t(comment),
        /**
        A documentation [comment](#highlight.tags.comment).
        */
-       docComment: t$1(comment),
+       docComment: t(comment),
        /**
        Any kind of identifier.
        */
@@ -15691,7 +15691,7 @@
        /**
        The [name](#highlight.tags.name) of a variable.
        */
-       variableName: t$1(name),
+       variableName: t(name),
        /**
        A type [name](#highlight.tags.name).
        */
@@ -15699,7 +15699,7 @@
        /**
        A tag name (subtag of [`typeName`](#highlight.tags.typeName)).
        */
-       tagName: t$1(typeName),
+       tagName: t(typeName),
        /**
        A property or field [name](#highlight.tags.name).
        */
@@ -15707,23 +15707,23 @@
        /**
        An attribute name (subtag of [`propertyName`](#highlight.tags.propertyName)).
        */
-       attributeName: t$1(propertyName),
+       attributeName: t(propertyName),
        /**
        The [name](#highlight.tags.name) of a class.
        */
-       className: t$1(name),
+       className: t(name),
        /**
        A label [name](#highlight.tags.name).
        */
-       labelName: t$1(name),
+       labelName: t(name),
        /**
        A namespace [name](#highlight.tags.name).
        */
-       namespace: t$1(name),
+       namespace: t(name),
        /**
        The [name](#highlight.tags.name) of a macro.
        */
-       macroName: t$1(name),
+       macroName: t(name),
        /**
        A literal value.
        */
@@ -15735,15 +15735,15 @@
        /**
        A documentation [string](#highlight.tags.string).
        */
-       docString: t$1(string),
+       docString: t(string),
        /**
        A character literal (subtag of [string](#highlight.tags.string)).
        */
-       character: t$1(string),
+       character: t(string),
        /**
        An attribute value (subtag of [string](#highlight.tags.string)).
        */
-       attributeValue: t$1(string),
+       attributeValue: t(string),
        /**
        A number [literal](#highlight.tags.literal).
        */
@@ -15751,32 +15751,32 @@
        /**
        An integer [number](#highlight.tags.number) literal.
        */
-       integer: t$1(number),
+       integer: t(number),
        /**
        A floating-point [number](#highlight.tags.number) literal.
        */
-       float: t$1(number),
+       float: t(number),
        /**
        A boolean [literal](#highlight.tags.literal).
        */
-       bool: t$1(literal),
+       bool: t(literal),
        /**
        Regular expression [literal](#highlight.tags.literal).
        */
-       regexp: t$1(literal),
+       regexp: t(literal),
        /**
        An escape [literal](#highlight.tags.literal), for example a
        backslash escape in a string.
        */
-       escape: t$1(literal),
+       escape: t(literal),
        /**
        A color [literal](#highlight.tags.literal).
        */
-       color: t$1(literal),
+       color: t(literal),
        /**
        A URL [literal](#highlight.tags.literal).
        */
-       url: t$1(literal),
+       url: t(literal),
        /**
        A language keyword.
        */
@@ -15785,40 +15785,40 @@
        The [keyword](#highlight.tags.keyword) for the self or this
        object.
        */
-       self: t$1(keyword),
+       self: t(keyword),
        /**
        The [keyword](#highlight.tags.keyword) for null.
        */
-       null: t$1(keyword),
+       null: t(keyword),
        /**
        A [keyword](#highlight.tags.keyword) denoting some atomic value.
        */
-       atom: t$1(keyword),
+       atom: t(keyword),
        /**
        A [keyword](#highlight.tags.keyword) that represents a unit.
        */
-       unit: t$1(keyword),
+       unit: t(keyword),
        /**
        A modifier [keyword](#highlight.tags.keyword).
        */
-       modifier: t$1(keyword),
+       modifier: t(keyword),
        /**
        A [keyword](#highlight.tags.keyword) that acts as an operator.
        */
-       operatorKeyword: t$1(keyword),
+       operatorKeyword: t(keyword),
        /**
        A control-flow related [keyword](#highlight.tags.keyword).
        */
-       controlKeyword: t$1(keyword),
+       controlKeyword: t(keyword),
        /**
        A [keyword](#highlight.tags.keyword) that defines something.
        */
-       definitionKeyword: t$1(keyword),
+       definitionKeyword: t(keyword),
        /**
        A [keyword](#highlight.tags.keyword) related to defining or
        interfacing with modules.
        */
-       moduleKeyword: t$1(keyword),
+       moduleKeyword: t(keyword),
        /**
        An operator.
        */
@@ -15826,39 +15826,39 @@
        /**
        An [operator](#highlight.tags.operator) that dereferences something.
        */
-       derefOperator: t$1(operator),
+       derefOperator: t(operator),
        /**
        Arithmetic-related [operator](#highlight.tags.operator).
        */
-       arithmeticOperator: t$1(operator),
+       arithmeticOperator: t(operator),
        /**
        Logical [operator](#highlight.tags.operator).
        */
-       logicOperator: t$1(operator),
+       logicOperator: t(operator),
        /**
        Bit [operator](#highlight.tags.operator).
        */
-       bitwiseOperator: t$1(operator),
+       bitwiseOperator: t(operator),
        /**
        Comparison [operator](#highlight.tags.operator).
        */
-       compareOperator: t$1(operator),
+       compareOperator: t(operator),
        /**
        [Operator](#highlight.tags.operator) that updates its operand.
        */
-       updateOperator: t$1(operator),
+       updateOperator: t(operator),
        /**
        [Operator](#highlight.tags.operator) that defines something.
        */
-       definitionOperator: t$1(operator),
+       definitionOperator: t(operator),
        /**
        Type-related [operator](#highlight.tags.operator).
        */
-       typeOperator: t$1(operator),
+       typeOperator: t(operator),
        /**
        Control-flow [operator](#highlight.tags.operator).
        */
-       controlOperator: t$1(operator),
+       controlOperator: t(operator),
        /**
        Program or markup punctuation.
        */
@@ -15867,7 +15867,7 @@
        [Punctuation](#highlight.tags.punctuation) that separates
        things.
        */
-       separator: t$1(punctuation),
+       separator: t(punctuation),
        /**
        Bracket-style [punctuation](#highlight.tags.punctuation).
        */
@@ -15876,22 +15876,22 @@
        Angle [brackets](#highlight.tags.bracket) (usually `<` and `>`
        tokens).
        */
-       angleBracket: t$1(bracket),
+       angleBracket: t(bracket),
        /**
        Square [brackets](#highlight.tags.bracket) (usually `[` and `]`
        tokens).
        */
-       squareBracket: t$1(bracket),
+       squareBracket: t(bracket),
        /**
        Parentheses (usually `(` and `)` tokens). Subtag of
        [bracket](#highlight.tags.bracket).
        */
-       paren: t$1(bracket),
+       paren: t(bracket),
        /**
        Braces (usually `{` and `}` tokens). Subtag of
        [bracket](#highlight.tags.bracket).
        */
-       brace: t$1(bracket),
+       brace: t(bracket),
        /**
        Content, for example plain text in XML or markup documents.
        */
@@ -15903,77 +15903,77 @@
        /**
        A level 1 [heading](#highlight.tags.heading).
        */
-       heading1: t$1(heading),
+       heading1: t(heading),
        /**
        A level 2 [heading](#highlight.tags.heading).
        */
-       heading2: t$1(heading),
+       heading2: t(heading),
        /**
        A level 3 [heading](#highlight.tags.heading).
        */
-       heading3: t$1(heading),
+       heading3: t(heading),
        /**
        A level 4 [heading](#highlight.tags.heading).
        */
-       heading4: t$1(heading),
+       heading4: t(heading),
        /**
        A level 5 [heading](#highlight.tags.heading).
        */
-       heading5: t$1(heading),
+       heading5: t(heading),
        /**
        A level 6 [heading](#highlight.tags.heading).
        */
-       heading6: t$1(heading),
+       heading6: t(heading),
        /**
        A prose separator (such as a horizontal rule).
        */
-       contentSeparator: t$1(content),
+       contentSeparator: t(content),
        /**
        [Content](#highlight.tags.content) that represents a list.
        */
-       list: t$1(content),
+       list: t(content),
        /**
        [Content](#highlight.tags.content) that represents a quote.
        */
-       quote: t$1(content),
+       quote: t(content),
        /**
        [Content](#highlight.tags.content) that is emphasized.
        */
-       emphasis: t$1(content),
+       emphasis: t(content),
        /**
        [Content](#highlight.tags.content) that is styled strong.
        */
-       strong: t$1(content),
+       strong: t(content),
        /**
        [Content](#highlight.tags.content) that is part of a link.
        */
-       link: t$1(content),
+       link: t(content),
        /**
        [Content](#highlight.tags.content) that is styled as code or
        monospace.
        */
-       monospace: t$1(content),
+       monospace: t(content),
        /**
        [Content](#highlight.tags.content) that has a strike-through
        style.
        */
-       strikethrough: t$1(content),
+       strikethrough: t(content),
        /**
        Inserted text in a change-tracking format.
        */
-       inserted: t$1(),
+       inserted: t(),
        /**
        Deleted text.
        */
-       deleted: t$1(),
+       deleted: t(),
        /**
        Changed text.
        */
-       changed: t$1(),
+       changed: t(),
        /**
        An invalid or unsyntactic element.
        */
-       invalid: t$1(),
+       invalid: t(),
        /**
        Metadata or meta-instruction.
        */
@@ -15982,17 +15982,17 @@
        [Metadata](#highlight.tags.meta) that applies to the entire
        document.
        */
-       documentMeta: t$1(meta),
+       documentMeta: t(meta),
        /**
        [Metadata](#highlight.tags.meta) that annotates or adds
        attributes to a given syntactic element.
        */
-       annotation: t$1(meta),
+       annotation: t(meta),
        /**
        Processing instruction or preprocessor directive. Subtag of
        [meta](#highlight.tags.meta).
        */
-       processingInstruction: t$1(meta),
+       processingInstruction: t(meta),
        /**
        [Modifier](#highlight.Tag^defineModifier) that indicates that a
        given element is being defined. Expected to be used with the
@@ -25614,7 +25614,7 @@
      tokenPrec: 413
    });
 
-   const r={Black:0,DarkRed:1,DarkGreen:2,DarkYellow:3,DarkBlue:4,DarkMagenta:5,DarkCyan:6,LightGray:7,DarkGray:8,Red:9,Green:10,Yellow:11,Blue:12,Magenta:13,BrightCyan:14,White:15,vsc:{Black:{rgb:[0,0,0]},DarkRed:{rgb:[205,49,49]},DarkGreen:{rgb:[13,188,121]},DarkYellow:{rgb:[229,229,16]},DarkBlue:{rgb:[36,114,200]},DarkMagenta:{rgb:[188,63,188]},DarkCyan:{rgb:[17,168,205]},LightGray:{rgb:[229,229,229]},DarkGray:{rgb:[102,102,102]},Red:{rgb:[241,76,76]},Green:{rgb:[35,209,139]},Yellow:{rgb:[245,245,67]},Blue:{rgb:[59,142,234]},Magenta:{rgb:[214,112,214]},BrightCyan:{rgb:[41,184,219]},White:{rgb:[229,229,229]}},toRGB(r){switch(typeof r){case"number":return e[r];case"object":if(r instanceof Array){let o=r[1];if(o<16)return e[o];if(o>=232){const r=t[o-232];return [r,r,r]}return o-=16,[l[Math.floor(o/36)],l[Math.floor(o/6)%6],l[o%6]]}return r.rgb}},to3bit:r=>[r%8,r>=8],fastEquals(r,e){const o=typeof r;return o===typeof e&&("number"===o?r===e:null===r&&null===e||null!==r&&null!==e&&(r instanceof Array?e instanceof Array&&r[1]===e[1]:!(e instanceof Array)&&(r.rgb[0]===e.rgb[0]&&r.rgb[1]===e.rgb[1]&&r.rgb[2]===e.rgb[2])))}},e=[[0,0,0],[128,0,0],[0,128,0],[128,128,0],[0,0,128],[128,0,128],[0,128,128],[192,192,192],[128,128,128],[255,0,0],[0,255,0],[255,255,0],[0,0,255],[255,0,255],[0,255,255],[255,255,255]],o=r=>{const e=new Uint8Array(r);let o;for(o=0;o<r;o++)e[o]=Math.round(o*(255/(r-1)));return e},t=o(24),l=o(6);class s{constructor(){this.buffer="",this.color={fg:null,bg:null,update_fg:!1,update_bg:!1};}pushColor(){}push(r){this.pushColor(),this.buffer+=r,this.color.update_fg=!1,this.color.update_bg=!1;}fg(e){r.fastEquals(this.color.fg,e)||(this.color.fg=e,this.color.update_fg=!0);}bg(e){r.fastEquals(this.color.bg,e)||(this.color.bg=e,this.color.update_bg=!0);}resetColor(r=!0,e=!0){r&&null!==this.color.fg!==this.color.update_fg&&(this.color.fg=null,this.color.update_fg=!0),e&&null!==this.color.bg!==this.color.update_bg&&(this.color.bg=null,this.color.update_bg=!0);}print(){console.log(this.buffer);}clear(){this.buffer="",this.color.update_bg=!0,this.color.update_fg=!0;}toString(){return this.buffer}}function n(e,o){if("number"==typeof e){const[t,l]=r.to3bit(e);return t+(l?90:30)+(o?10:0)+""}return e instanceof Array?(o?"48;":"38;")+e.join(";"):(o?"48;2;":"38;2;")+e.rgb.join(";")}class i extends s{push(r){const e=r.split("\n");let o;for(o=0;o<e.length-1;o++)super.push(e[o]),null===this.color.bg?this.buffer+="\n":(this.buffer+="[m\n",this.color.update_fg=!0,this.color.update_bg=!0);super.push(e[o]);}pushColor(){const{update_fg:r,update_bg:e}=this.color;if(!r&&!e)return;const o=[];r&&null!==this.color.fg&&o.push(n(this.color.fg,!1)),e&&null!==this.color.bg&&o.push(n(this.color.bg,!0)),null===this.color.fg&&null===this.color.bg?o.push(""):(r&&null===this.color.fg&&o.push("39"),e&&null===this.color.bg&&o.push("49")),this.buffer+="[",this.buffer+=o.join(";"),this.buffer+="m";}print(){console.log(this.buffer+"[m");}}function u(e,o){return (o?"background:":"color:")+"rgb("+r.toRGB(e).join(",")+");"}class c extends s{constructor(){super(...arguments),this.styles=[];}pushColor(){const r=[];null!==this.color.fg&&r.push(u(this.color.fg,!1)),null!==this.color.bg&&r.push(u(this.color.bg,!0)),this.buffer+="%c",this.styles.push(r.join(";"));}print(){console.log(this.buffer,...this.styles);}clear(){super.clear(),this.styles.length=0;}}const a="object"==typeof process?i:c,[f,h,g,b]=["│ ","├╴","└╴","  "],p={name:r.BrightCyan,source:r.DarkYellow,tree:r.DarkGray,blockQuotes:r.LightGray,blockReturn:r.DarkGray,colon:r.LightGray,ellipsis:r.LightGray},d={name:r.vsc.BrightCyan,source:r.vsc.DarkYellow,tree:r.vsc.DarkGray,blockQuotes:r.vsc.LightGray,blockReturn:r.vsc.DarkGray,colon:r.vsc.LightGray,ellipsis:r.vsc.LightGray},y="object"==typeof process?p:d;function D(r,e,o={}){const t=o.writer||(o.colors??1?new a:new s);let l,n=o.filter||(()=>1),i=o.theme||y;if(o.lineByLine){let o;for(o of G(r,e,i,n)){for(l of o)l[1]&&(-1===l[1]?t.resetColor(!0,!1):t.fg(l[1])),t.push(l[0]);t.print(),t.clear();}}else {for(l of function*(r,e){let o,t;if(o=r.next(),!o.done)for(t of o.value)yield t;for(;o=r.next(),!o.done;)for(t of(yield e,o.value))yield t;}(G(r,e,i,n),["\n",void 0]))l[1]&&(-1===l[1]?t.resetColor(!0,!1):t.fg(l[1])),t.push(l[0]);t.print();}}function*G(r,e,o,t){const l=r.node.name;switch(t(r.node)){case 2:yield v([l,o.name],[": ",o.colon],["…",o.ellipsis]);case 0:return}if(r.firstChild()){let s,n;yield v([l,o.name],[":",o.colon]);do{for(s of(n=r.node.nextSibling,_(G(r,e,o,t),[n?h:g,o.tree],[n?f:b,o.tree])))yield s;}while(r.nextSibling());r.parent();}else {const t=e.substring(r.from,r.to);if(t===l)yield v([l,o.source]);else if(t.indexOf("\n")<0)yield v([l,o.name],[": ",o.colon],[t,o.source]);else {yield v([l,o.name],[": ",o.colon],["'''",o.blockQuotes]);let r=0,e=t.split(/\r?\n/g),s=e.length-1;for(;r<s;r++)yield v([b+e[r],o.source],["⮐",o.blockReturn]);s>=0&&(yield v([b+e[r],o.source])),yield v(["  '''",o.blockQuotes]);}}}function*v(...r){let e=0,o=r.length;for(;e<o;e++)yield r[e];}function*_(r,e,o){let t=r.next();for(t.done||(yield m(e,t.value));t=r.next(),!t.done;)yield m(o,t.value);return t.value}function*m(r,e){let o;for(yield r;o=e.next(),!o.done;)yield o.value;return o.value}
+   const o=r=>{const e=new Uint8Array(r);let o;for(o=0;o<r;o++)e[o]=Math.round(o*(255/(r-1)));return e};o(24);o(6);
 
    Tag.define();
 
@@ -25713,6 +25713,7 @@
            
            if (all === 0) { return; }
            
+           // Add counter
            let deco = Decoration.widget({
              widget: new CompletionWidget(done + rejected, all),
            });
@@ -25720,7 +25721,7 @@
          }
        });
      }
-     
+
      return Decoration.set(widgets);
    }
 
@@ -25738,6 +25739,64 @@
      decorations: v => v.decorations,
    });
 
+   const dateAlertMarker = new class extends GutterMarker {
+     toDOM() {
+       return document.createTextNode("⏰");
+     }
+   };
+
+   function lineDueSoon(text) {
+     let m = text.match(/by (\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})/);
+     if (m === null) { return false; }  
+     let year = parseInt(m[3]);
+     if (year < 70) {
+       year += 2000;
+     } else if (year < 100) {
+       year += 1900;
+     }
+     
+     let date = new Date(year, m[1] - 1, m[2] - 1);
+       
+     // todo This handles timezones incorrectly
+     let now = new Date();
+     let delta = (date - now) / 1000 / 60 / 60 / 24;
+     
+     return delta < 7;
+   }
+
+   function dateAlertMarkers(view) {
+     let set = RangeSet.empty;
+     
+     for (let {from, to} of view.visibleRanges) {
+       syntaxTree(view.state).iterate({
+         from, to,
+         enter: (nodeRef) => {
+           if (nodeRef.name != "OpenTask") { return; }
+           
+           // todo Check for updates and snoozes
+           // let block = nodeRef.node.getChild("Block");
+           // if (block === null) { return; }
+           
+           // todo This should only use the task text
+           let str = view.state.doc.sliceString(nodeRef.from, nodeRef.to);
+           if (!lineDueSoon(str)) { return; }
+           let lineFrom = view.state.doc.lineAt(nodeRef.from).from;
+                           
+           set = set.update({
+             add: [dateAlertMarker.range(lineFrom)] 
+           });
+         }
+       });
+     }  
+     return set;  
+   }
+
+   const dateAlertGutter = gutter({
+     class: "cm-date-alert-gutter",
+     markers: (view) => dateAlertMarkers(view),
+     initialSpacer: () => dateAlertMarker,
+   });
+
    let startState = EditorState.create({
      doc: localStorageLoad,
      extensions: [
@@ -25748,7 +25807,8 @@
        localStorageSaveOnChange,
        syntaxHighlighting(markdoHighlight),
        completionPlugin,
-     ]
+       dateAlertGutter,
+     ],
    });
 
    new EditorView({
@@ -25756,8 +25816,8 @@
      parent: document.body
    });
 
-   let tree = parser.parse(localStorageLoad);
-   tree.cursor();
-   D(tree.cursor(), localStorageLoad);
+   // let tree = markdoParser.parse(localStorageLoad);
+   // let cursor = tree.cursor();
+   // visualize(tree.cursor(), localStorageLoad);
 
 })();

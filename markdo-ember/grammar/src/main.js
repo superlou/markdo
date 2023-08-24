@@ -1,6 +1,6 @@
 import {basicSetup} from "codemirror";
 import {EditorState} from "@codemirror/state";
-import {EditorView, keymap} from "@codemirror/view";
+import {EditorView, keymap, gutter} from "@codemirror/view";
 import {indentUnit, syntaxHighlighting} from "@codemirror/language";
 import {defaultKeymap, indentWithTab} from "@codemirror/commands";
 import {parser as markdoParser} from "../dist/markdo.grammar.js";
@@ -9,6 +9,7 @@ import {markdo} from "./markdo.js";
 import {localStorageSaveOnChange, localStorageLoad} from "./storage.js";
 import {markdoHighlight} from "./highlight.js";
 import {completionPlugin} from "./completion.js";
+import {dateAlertGutter} from "./date-alert.js";
 
 let startState = EditorState.create({
   doc: localStorageLoad,
@@ -20,7 +21,8 @@ let startState = EditorState.create({
     localStorageSaveOnChange,
     syntaxHighlighting(markdoHighlight),
     completionPlugin,
-  ]
+    dateAlertGutter,
+  ],
 });
 
 let view = new EditorView({
@@ -28,6 +30,6 @@ let view = new EditorView({
   parent: document.body
 });
 
-let tree = markdoParser.parse(localStorageLoad);
-let cursor = tree.cursor();
-visualize(tree.cursor(), localStorageLoad);
+// let tree = markdoParser.parse(localStorageLoad);
+// let cursor = tree.cursor();
+// visualize(tree.cursor(), localStorageLoad);

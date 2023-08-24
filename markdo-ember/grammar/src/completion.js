@@ -53,14 +53,15 @@ function completionWidgets(view) {
         
         if (all === 0) { return; }
         
+        // Add counter
         let deco = Decoration.widget({
           widget: new CompletionWidget(done + rejected, all),
         });
         widgets.push(deco.range(nodeRef.from + 3));
       }
-    })
+    });
   }
-  
+
   return Decoration.set(widgets);
 }
 
